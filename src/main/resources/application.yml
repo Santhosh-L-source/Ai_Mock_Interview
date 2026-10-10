@@ -1,0 +1,84 @@
+spring:
+  application:
+    name: ai-interviewer
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: "${SPRING_DATASOURCE_PASSWORD:postgres}"
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:10}
+      minimum-idle: 2
+      idle-timeout: 30000
+      connection-timeout: 30000
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: ${SHOW_SQL:false}
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    validate-on-migrate: false
+    locations: classpath:db/migration
+
+  mail:
+    host: ${SPRING_MAIL_HOST:smtp.gmail.com}
+    port: ${SPRING_MAIL_PORT:587}
+    username: ${SPRING_MAIL_USERNAME:}
+    password: ${SPRING_MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enabled: true
+
+  threads:
+    virtual:
+      enabled: true
+
+langchain4j:
+  open-ai:
+    chat-model:
+      api-key: ${GROQ_API_KEY:}
+      base-url: ${GROQ_BASE_URL:https://api.groq.com/openai/v1}
+      model-name: ${GROQ_MODEL_NAME:openai/gpt-oss-120b}
+      temperature: ${OPENAI_TEMPERATURE:0.3}
+      timeout-seconds: ${OPENAI_TIMEOUT_SECONDS:60}
+
+livekit:
+  api-key: ${LIVEKIT_API_KEY:}
+  api-secret: ${LIVEKIT_API_SECRET:}
+  url: ${LIVEKIT_URL:wss://livekit.cloud}
+
+deepgram:
+  api-key: ${DEEPGRAM_API_KEY:}
+
+openai:
+  tts:
+    api-key: ${OPENAI_TTS_API_KEY:}
+    model: ${OPENAI_TTS_MODEL:tts-1}
+    voice: ${OPENAI_TTS_VOICE:alloy}
+
+supabase:
+  url: ${SUPABASE_URL:http://localhost:54321}
+  anon-key: ${SUPABASE_ANON_KEY:}
+  jwt-secret: ${SUPABASE_JWT_SECRET:}
+
+server:
+  port: ${SERVER_PORT:8082}
+
+logging:
+  level:
+    root: INFO
+    com.ai.interviewer: DEBUG
+    org.hibernate.SQL: INFO
+
